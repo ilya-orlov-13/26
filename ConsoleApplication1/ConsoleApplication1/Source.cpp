@@ -1,9 +1,9 @@
 #include "Header.h"
 
-// Конструктор GraphAdjacencyMatrix
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ GraphAdjacencyMatrix
 GraphAdjacencyMatrix::GraphAdjacencyMatrix(int V) : NumVertices(V) {
     if (V <= 0) {
-        throw invalid_argument("отрицательное количество вершин");
+        throw invalid_argument("РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІРµСЂС€РёРЅ");
     }
     AdjacencyMatrix = new bool* [NumVertices];
     for (int I = 0; I < NumVertices; ++I) {
@@ -14,7 +14,7 @@ GraphAdjacencyMatrix::GraphAdjacencyMatrix(int V) : NumVertices(V) {
     }
 }
 
-// Деструктор GraphAdjacencyMatrix
+// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ GraphAdjacencyMatrix
 GraphAdjacencyMatrix::~GraphAdjacencyMatrix() {
     for (int I = 0; I < NumVertices; ++I) {
         delete[] AdjacencyMatrix[I];
@@ -23,24 +23,24 @@ GraphAdjacencyMatrix::~GraphAdjacencyMatrix() {
     AdjacencyMatrix = nullptr;
 }
 
-// Метод AddEdge
+// РњРµС‚РѕРґ AddEdge
 void GraphAdjacencyMatrix::AddEdge(int U, int V) {
     if (U < 0 || U >= NumVertices || V < 0 || V >= NumVertices) {
-        throw out_of_range("Индекс вершины выходит за пределы диапазона");
+        throw out_of_range("РРЅРґРµРєСЃ РІРµСЂС€РёРЅС‹ РІС‹С…РѕРґРёС‚ Р·Р° РїСЂРµРґРµР»С‹ РґРёР°РїР°Р·РѕРЅР°");
     }
     AdjacencyMatrix[U][V] = true;
-    AdjacencyMatrix[V][U] = true; // Для неориентированного графа
+    AdjacencyMatrix[V][U] = true; // Р”Р»СЏ РЅРµРѕСЂРёРµРЅС‚РёСЂРѕРІР°РЅРЅРѕРіРѕ РіСЂР°С„Р°
 }
 
-// Метод IsEdge
+// РњРµС‚РѕРґ IsEdge
 bool GraphAdjacencyMatrix::IsEdge(int U, int V) const {
     if (U < 0 || U >= NumVertices || V < 0 || V >= NumVertices) {
-        throw out_of_range("Индекс вершины выходит за пределы диапазона");
+        throw out_of_range("РРЅРґРµРєСЃ РІРµСЂС€РёРЅС‹ РІС‹С…РѕРґРёС‚ Р·Р° РїСЂРµРґРµР»С‹ РґРёР°РїР°Р·РѕРЅР°");
     }
     return AdjacencyMatrix[U][V];
 }
 
-// Метод CalculateDegrees
+// РњРµС‚РѕРґ CalculateDegrees
 vector<int> GraphAdjacencyMatrix::CalculateDegrees() const {
     vector<int> DegreesVector(NumVertices, 0);
 
@@ -55,7 +55,7 @@ vector<int> GraphAdjacencyMatrix::CalculateDegrees() const {
     return DegreesVector;
 }
 
-// Метод PrintAdjacencyMatrix
+// РњРµС‚РѕРґ PrintAdjacencyMatrix
 void GraphAdjacencyMatrix::PrintAdjacencyMatrix() const {
     cout << "  ";
     for (int J = 0; J < NumVertices; ++J) {
@@ -75,23 +75,23 @@ void GraphAdjacencyMatrix::PrintAdjacencyMatrix() const {
 // Graf1
 void SolveGraf1Task() {
     string FileName;
-	cout << "Введите имя файла: ";
+	cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ С„Р°Р№Р»Р°: ";
 	cin >> FileName;
     ifstream Fin(FileName);
 
     if (!Fin.is_open()) {
-        cerr << "Ошибка: не удолось открыть файл '" << FileName << "'" << endl;
+        cerr << "РћС€РёР±РєР°: РЅРµ СѓРґРѕР»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» '" << FileName << "'" << endl;
         return;
     }
 
     int NumVerticesFromFile;
     if (!(Fin >> NumVerticesFromFile)) {
-        cerr << "Ошибка: не удалось прочитать количество вершин" << endl;
+        cerr << "РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РїСЂРѕС‡РёС‚Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РІРµСЂС€РёРЅ" << endl;
         Fin.close();
         return;
     }
     if (NumVerticesFromFile <= 0) {
-        cerr << "Ошибка: отрицательное количество вершин" << endl;
+        cerr << "РћС€РёР±РєР°: РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІРµСЂС€РёРЅ" << endl;
         Fin.close();
         return;
     }
@@ -104,7 +104,7 @@ void SolveGraf1Task() {
             for (int J = 0; J < NumVerticesFromFile; ++J) {
                 int EdgeExists;
                 if (!(Fin >> EdgeExists)) {
-                    cerr << "Ошибка: неполная матрица смежности" << endl;
+                    cerr << "РћС€РёР±РєР°: РЅРµРїРѕР»РЅР°СЏ РјР°С‚СЂРёС†Р° СЃРјРµР¶РЅРѕСЃС‚Рё" << endl;
                     delete GraphInstance;
                     Fin.close();
                     return;
@@ -113,7 +113,7 @@ void SolveGraf1Task() {
                     GraphInstance->AddEdge(I, J);
                 }
                 else if (EdgeExists != 0) {
-                    cerr << "Ошибка: матрица смежности содержит небинарные значения" << endl;
+                    cerr << "РћС€РёР±РєР°: РјР°С‚СЂРёС†Р° СЃРјРµР¶РЅРѕСЃС‚Рё СЃРѕРґРµСЂР¶РёС‚ РЅРµР±РёРЅР°СЂРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ" << endl;
                     delete GraphInstance;
                     Fin.close();
                     return;
@@ -124,7 +124,7 @@ void SolveGraf1Task() {
 
     }
     catch (const exception& E) {
-        cerr << "Ошибка при создании или чтении графа: " << E.what() << endl;
+        cerr << "РћС€РёР±РєР° РїСЂРё СЃРѕР·РґР°РЅРёРё РёР»Рё С‡С‚РµРЅРёРё РіСЂР°С„Р°: " << E.what() << endl;
         delete GraphInstance;
         Fin.close();
         return;
@@ -136,12 +136,12 @@ void SolveGraf1Task() {
         DegreesVector = GraphInstance->CalculateDegrees();
     }
     catch (const exception& E) {
-        cerr << "Ошибка при вычислении степени: " << E.what() << endl;
+        cerr << "РћС€РёР±РєР° РїСЂРё РІС‹С‡РёСЃР»РµРЅРёРё СЃС‚РµРїРµРЅРё: " << E.what() << endl;
         delete GraphInstance;
         return;
     }
 
-    cout << "Степени вершин:" << endl;
+    cout << "РЎС‚РµРїРµРЅРё РІРµСЂС€РёРЅ:" << endl;
     for (int I = 0; I < NumVerticesFromFile; ++I) {
         cout << I+1 << ": " << DegreesVector[I] << endl;
     }
